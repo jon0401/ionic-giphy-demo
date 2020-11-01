@@ -16,6 +16,7 @@
   <div *ngIf="isLoaded" class="collection ion-padding">
     <ion-grid text-center>
       <ion-row *ngFor="let giphy of iteration; let i = index">
+
         <ng-container *ngIf="{ innerIndex: 2 * i, node: giphyService.savedGiphyList[2*i] } as currentGiphy">
           <ion-col class="collection-item" size="6">
             <ion-button class="collection-fav-button" size="default" color="dark" (click)="removeSavedGiphy(currentGiphy.innerIndex, currentGiphy.node.id)">REMOVE</ion-button>
@@ -24,6 +25,7 @@
             </div>
           </ion-col>
         </ng-container>
+
         <ng-container *ngIf="giphyService.savedGiphyList[2*i+1] && { innerIndex: 2*i+1, node: giphyService.savedGiphyList[2*i+1] } as currentGiphy">
           <ion-col class="collection-item"  size="6">
             <ion-button class="collection-fav-button" size="default" color="dark" (click)="removeSavedGiphy(currentGiphy.innerIndex, currentGiphy.node.id)">REMOVE</ion-button>
@@ -32,6 +34,7 @@
             </div>
           </ion-col>
         </ng-container>
+        
       </ion-row>
     </ion-grid>
 

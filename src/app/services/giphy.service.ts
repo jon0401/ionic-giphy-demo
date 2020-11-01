@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Plugins } from '@capacitor/core';
+import { environment } from '../../environments/environment';
 
 const { Storage } = Plugins;
 
@@ -14,9 +15,11 @@ export class GiphyService {
   public giphyList = [];
   public savedGiphyList = [];
   public startFrom: number = 0;
-  public pageSize: number = 12;
   public keyword: string;
-  private api_key: string = "gy7cZIOjo9onwFcxFkutCZjLqRJ4QuWH";
+  giphyDomain: string = environment.giphyAPI_Host;
+  api_key: string = environment.giphyAPI_Key;
+  pageSize: number = environment.giphyAPI_PageSize;
+
 
   constructor(private http: HttpClient) { }
 
@@ -58,7 +61,7 @@ export class GiphyService {
         params = params.append('offset', this.startFrom.toString());
         // params = params.append('rating', 'r');
 
-        this.http.get<any[]>("https://api.giphy.com/v1/gifs/search", { observe: 'response', params : params }).subscribe(res => {
+        this.http.get<any[]>(this.giphyDomain + "v1/gifs/search", { observe: 'response', params : params }).subscribe(res => {
           if (isLoadMore)
           {
             this.giphyList = this.giphyList.length == 0 ? res.body["data"] : [...this.giphyList, ...res.body["data"]];
@@ -89,7 +92,7 @@ export class GiphyService {
         params = params.append('api_key', this.api_key);
         params = params.append('ids', JSON.parse(savedGiphyIDs));
   
-        this.http.get<any[]>("https://api.giphy.com/v1/gifs", { observe: 'response', params : params }).subscribe(res => {
+        this.http.get<any[]>(this.giphyDomain + "v1/gifs", { observe: 'response', params : params }).subscribe(res => {
           this.savedGiphyList = res.body["data"];
           resolve(true);
         }, (err) => {
