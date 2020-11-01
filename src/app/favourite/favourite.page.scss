@@ -1,0 +1,51 @@
+.collection-item
+{
+    ion-button
+    {
+        display: none;
+        position: absolute;
+    }
+}
+
+.collection-fav-button
+{
+    z-index: 2;
+}
+
+
+
+.collection-item-img
+{
+    border-radius: 8px !important;
+    margin: 4px 4px 10px 4px;
+    // overflow: hidden;
+    z-index: -1;
+}
+
+.collection-item:hover
+{
+    animation: tapAnimation 0.8s cubic-bezier(0.31, 1, 0.34, 1) forwards;
+    .collection-item-img
+    {
+        opacity: 0.5;
+    }
+    ion-button
+    {
+        display: block;
+        top: 37%;
+        left: 20%;
+    }
+}
+
+@keyframes tapAnimation 
+{
+    0% {
+        opacity: 1;
+        transform: scale(0.94); 
+    }
+    100% {
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.05);
+        transform: scale(1);
+    }
+}

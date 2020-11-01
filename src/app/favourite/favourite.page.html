@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      My Favorite
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">My Favorite</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="isLoaded" class="collection ion-padding">
+    <ion-grid text-center>
+      <ion-row *ngFor="let giphy of iteration; let i = index">
+        <ng-container *ngIf="{ innerIndex: 2 * i, node: giphyService.savedGiphyList[2*i] } as currentGiphy">
+          <ion-col class="collection-item" size="6">
+            <ion-button class="collection-fav-button" size="default" color="dark" (click)="removeSavedGiphy(currentGiphy.innerIndex, currentGiphy.node.id)">REMOVE</ion-button>
+            <div>
+              <img class="collection-item-img" [src]="currentGiphy.node.images.downsized.url"/>
+            </div>
+          </ion-col>
+        </ng-container>
+        <ng-container *ngIf="giphyService.savedGiphyList[2*i+1] && { innerIndex: 2*i+1, node: giphyService.savedGiphyList[2*i+1] } as currentGiphy">
+          <ion-col class="collection-item"  size="6">
+            <ion-button class="collection-fav-button" size="default" color="dark" (click)="removeSavedGiphy(currentGiphy.innerIndex, currentGiphy.node.id)">REMOVE</ion-button>
+            <div>
+              <img class="collection-item-img" [src]="currentGiphy.node?.images.downsized.url"/>
+            </div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+</ion-content>
