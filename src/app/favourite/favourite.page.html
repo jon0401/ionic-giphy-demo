@@ -3,6 +3,9 @@
     <ion-title>
       My Favorite
     </ion-title>
+    <ion-buttons slot="end" (click)="removeAllGiphy()">
+      <ion-icon slot="start" name="trash"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -19,7 +22,7 @@
 
         <ng-container *ngIf="{ innerIndex: 2 * i, node: giphyService.savedGiphyList[2*i] } as currentGiphy">
           <ion-col class="collection-item" size="6">
-            <ion-button class="collection-fav-button" size="default" color="dark" (click)="removeSavedGiphy(currentGiphy.innerIndex, currentGiphy.node.id)">REMOVE</ion-button>
+            <ion-button class="collection-fav-button" size="default" color="dark" (click)="removeSavedGiphy(currentGiphy.innerIndex, currentGiphy.node.id, currentGiphy.node?.images.downsized.url)">REMOVE</ion-button>
             <div>
               <img class="collection-item-img" [src]="currentGiphy.node.images.downsized.url"/>
             </div>
@@ -28,7 +31,7 @@
 
         <ng-container *ngIf="giphyService.savedGiphyList[2*i+1] && { innerIndex: 2*i+1, node: giphyService.savedGiphyList[2*i+1] } as currentGiphy">
           <ion-col class="collection-item"  size="6">
-            <ion-button class="collection-fav-button" size="default" color="dark" (click)="removeSavedGiphy(currentGiphy.innerIndex, currentGiphy.node.id)">REMOVE</ion-button>
+            <ion-button class="collection-fav-button" size="default" color="dark" (click)="removeSavedGiphy(currentGiphy.innerIndex, currentGiphy.node.id, currentGiphy.node?.images.downsized.url)">REMOVE</ion-button>
             <div>
               <img class="collection-item-img" [src]="currentGiphy.node?.images.downsized.url"/>
             </div>

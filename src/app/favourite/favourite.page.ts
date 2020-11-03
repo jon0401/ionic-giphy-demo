@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GiphyService } from '../services/giphy.service';
 import { ToastService } from '../services/toast.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-favourite',
@@ -13,7 +14,8 @@ export class FavouritePage implements OnInit {
   iteration = [].constructor(0);
 
   constructor(public giphyService: GiphyService,
-              public toastService: ToastService) { }
+              public toastService: ToastService,
+              public alertService: AlertService) { }
 
   ngOnInit() {
   }
@@ -35,7 +37,31 @@ export class FavouritePage implements OnInit {
     });
   }
 
-  async removeSavedGiphy(index, id)
+  async removeAllGiphy()
+  {
+    const alert = await this.alertService.RemoveAllGiphyAlert();
+    await alert.onDidDismiss().then((data)=>{
+      if (data.data === true)
+      {
+        this.giphyService.RemoveAllSavedGiphy();
+        this.iteration = [].constructor(0);
+        this.giphyService.savedGiphyList = [];
+      }
+    });
+  }
+
+  async removeSavedGiphy(index, id, image)
+  {
+    const alert = await this.alertService.RemoveGiphyAlert(image);
+    await alert.onDidDismiss().then((data)=>{
+      if (data.data === true)
+      {
+        this.confirmRemoveSavedGiphy(index, id);
+      }
+    });
+  }
+
+  protected async confirmRemoveSavedGiphy(index, id)
   {
     await this.giphyService.RemoveGiphyFromStorage(id);
     this.giphyService.savedGiphyList.splice(index, 1);
